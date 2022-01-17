@@ -58,7 +58,7 @@ namespace MinionMaster
             }
         }
 
-        public String describe(AttackResult attackResult, Resistance resistance, int additionalDamage)
+        public String describe(AttackResult attackResult, Resistance resistance, int additionalDamage, bool isMagical, DamageType damageType)
         {
             if (AttackResult.Miss == attackResult || AttackResult.CritFail == attackResult)
             {
@@ -71,28 +71,24 @@ namespace MinionMaster
             {
                 allDice.Add(additionalDamage);
             }
-            String details = "";
-            if (Resistance.None != resistance)
+            String diceDetails = "";
+            if (allDice.Count > 1 || Resistance.Resistant != resistance)
             {
-                details += "(";
-            }
-            if (allDice.Count > 1)
-            {
-                details += "(";
-                details += allDice.Select(d => d.ToString()).Aggregate((x, y) => Int32.Parse(y) >= 0 ? (x + "+" + y) : (x + y) + ")");
+                diceDetails = $"({allDice.Select(d => d.ToString()).Aggregate((x, y) => Int32.Parse(y) >= 0 ? (x + "+" + y) : (x + y))})";
             }
             if (Resistance.Resistant == resistance)
             {
-                details += "/2)";
+                desc = $"{totalDamage} ({diceDetails}/2)";
             }
             else if (Resistance.Vulnerable == resistance)
             {
-                details += "*2)";
+                desc = $"{totalDamage} ({diceDetails}*2)";
             }
-            if (details.Length > 0)
+            if (isMagical)
             {
-                desc += " " + details;
+                desc += " magical";
             }
+            desc += $" {damageType} damage!";
             return desc;
         }
     }

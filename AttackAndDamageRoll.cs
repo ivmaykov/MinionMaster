@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    public readonly struct AttackAndDamageRoll
+    internal readonly struct AttackAndDamageRoll
     {
-        public AttackAndDamageRoll(AttackRoll attackRoll, DamageRoll damageRoll)
+        public AttackAndDamageRoll(int minionIndex, int attackTypeIndex, int attackCountIndex, AttackRoll attackRoll, DamageRoll damageRoll)
         {
+            this.MinionIndex = minionIndex; // starts at 1
+            this.AttackTypeIndex = attackTypeIndex; // starts at 1
+            this.AttackCountIndex = attackCountIndex; // starts at 1
             this.AttackRoll = attackRoll;
             this.DamageRoll = damageRoll;
         }
 
-        public AttackRoll AttackRoll { get; }
-        public DamageRoll DamageRoll { get; }
+        internal int MinionIndex { get; }
+        internal int AttackTypeIndex { get; }
+        internal int AttackCountIndex { get; }
+        internal AttackRoll AttackRoll { get; }
+        internal DamageRoll DamageRoll { get; }
     }
 }
