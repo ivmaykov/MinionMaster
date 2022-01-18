@@ -52,6 +52,7 @@
     <Compile Include="AttackRoll.cs" />
     <Compile Include="AttackSpecification.cs" />
     <Compile Include="AttackUiComponents.cs" />
+    <Compile Include="DamageFormula.cs" />
     <Compile Include="DamageRoll.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="DieType.cs" />

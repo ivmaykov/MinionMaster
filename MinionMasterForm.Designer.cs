@@ -34,10 +34,7 @@
             this.advantage1_label = new System.Windows.Forms.Label();
             this.hit_modifier1_label = new System.Windows.Forms.Label();
             this.damage_dice1_label = new System.Windows.Forms.Label();
-            this.damage_die1_comboBox = new System.Windows.Forms.ComboBox();
-            this.damage_die1_count_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.additional_damage1_label = new System.Windows.Forms.Label();
-            this.additional_damage1_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.target_ac_label = new System.Windows.Forms.Label();
             this.target_ac_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.target_resistance1_label = new System.Windows.Forms.Label();
@@ -52,10 +49,7 @@
             this.attack1_enabled_checkBox = new System.Windows.Forms.CheckBox();
             this.attack2_enabled_checkBox = new System.Windows.Forms.CheckBox();
             this.attack2_label = new System.Windows.Forms.Label();
-            this.additional_damage2_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.additional_damage2_label = new System.Windows.Forms.Label();
-            this.damage_die2_count_numericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.damage_die2_comboBox = new System.Windows.Forms.ComboBox();
             this.damage_dice2_label = new System.Windows.Forms.Label();
             this.hit_modifier2_label = new System.Windows.Forms.Label();
             this.advantage2_label = new System.Windows.Forms.Label();
@@ -67,10 +61,7 @@
             this.target_resistance3_label = new System.Windows.Forms.Label();
             this.attack3_enabled_checkBox = new System.Windows.Forms.CheckBox();
             this.attack3_label = new System.Windows.Forms.Label();
-            this.additional_damage3_numericUpDown = new System.Windows.Forms.NumericUpDown();
             this.additional_damage3_label = new System.Windows.Forms.Label();
-            this.damage_die3_count_numericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.damage_die3_comboBox = new System.Windows.Forms.ComboBox();
             this.damage_dice3_label = new System.Windows.Forms.Label();
             this.hit_modifier3_label = new System.Windows.Forms.Label();
             this.advantage3_label = new System.Windows.Forms.Label();
@@ -91,23 +82,20 @@
             this.attack1_magical_checkBox = new System.Windows.Forms.CheckBox();
             this.attack2_magical_checkBox = new System.Windows.Forms.CheckBox();
             this.attack3_magical_checkBox = new System.Windows.Forms.CheckBox();
-            this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.attack1_name_label = new System.Windows.Forms.Label();
             this.attack1_name_textBox = new System.Windows.Forms.TextBox();
             this.attack2_name_textBox = new System.Windows.Forms.TextBox();
             this.attack2_name_label = new System.Windows.Forms.Label();
             this.attack3_name_textBox = new System.Windows.Forms.TextBox();
             this.attack3_name_label = new System.Windows.Forms.Label();
+            this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.attack1_damage_formula_textBox = new System.Windows.Forms.TextBox();
+            this.attack2_damage_formula_textBox = new System.Windows.Forms.TextBox();
+            this.attack3_damage_formula_textBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier1_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die1_count_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage1_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.target_ac_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_minions_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage2_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die2_count_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier2_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage3_numericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die3_count_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier3_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.attack1_count_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.attack2_count_numericUpDown)).BeginInit();
@@ -165,33 +153,9 @@
             this.damage_dice1_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_dice1_label.Location = new System.Drawing.Point(40, 341);
             this.damage_dice1_label.Name = "damage_dice1_label";
-            this.damage_dice1_label.Size = new System.Drawing.Size(127, 25);
+            this.damage_dice1_label.Size = new System.Drawing.Size(155, 25);
             this.damage_dice1_label.TabIndex = 10;
-            this.damage_dice1_label.Text = "Damage dice";
-            // 
-            // damage_die1_comboBox
-            // 
-            this.damage_die1_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die1_comboBox.FormattingEnabled = true;
-            this.damage_die1_comboBox.Location = new System.Drawing.Point(235, 338);
-            this.damage_die1_comboBox.Name = "damage_die1_comboBox";
-            this.damage_die1_comboBox.Size = new System.Drawing.Size(161, 33);
-            this.damage_die1_comboBox.TabIndex = 11;
-            this.damage_die1_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_die1_comboBox_SelectedIndexChanged);
-            // 
-            // damage_die1_count_numericUpDown
-            // 
-            this.damage_die1_count_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die1_count_numericUpDown.Location = new System.Drawing.Point(182, 338);
-            this.damage_die1_count_numericUpDown.Name = "damage_die1_count_numericUpDown";
-            this.damage_die1_count_numericUpDown.Size = new System.Drawing.Size(47, 30);
-            this.damage_die1_count_numericUpDown.TabIndex = 13;
-            this.damage_die1_count_numericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.damage_die1_count_numericUpDown.ValueChanged += new System.EventHandler(this.damage_die1_count_numericUpDown_ValueChanged);
+            this.damage_dice1_label.Text = "Damage formula";
             // 
             // additional_damage1_label
             // 
@@ -202,25 +166,6 @@
             this.additional_damage1_label.Size = new System.Drawing.Size(174, 25);
             this.additional_damage1_label.TabIndex = 15;
             this.additional_damage1_label.Text = "Additional damage";
-            // 
-            // additional_damage1_numericUpDown
-            // 
-            this.additional_damage1_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.additional_damage1_numericUpDown.Location = new System.Drawing.Point(235, 377);
-            this.additional_damage1_numericUpDown.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.additional_damage1_numericUpDown.Name = "additional_damage1_numericUpDown";
-            this.additional_damage1_numericUpDown.Size = new System.Drawing.Size(162, 30);
-            this.additional_damage1_numericUpDown.TabIndex = 16;
-            this.additional_damage1_numericUpDown.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.additional_damage1_numericUpDown.ValueChanged += new System.EventHandler(this.additional_damage1_numericUpDown_ValueChanged);
             // 
             // target_ac_label
             // 
@@ -378,21 +323,6 @@
             this.attack2_label.TabIndex = 38;
             this.attack2_label.Text = "Attack 2";
             // 
-            // additional_damage2_numericUpDown
-            // 
-            this.additional_damage2_numericUpDown.Enabled = false;
-            this.additional_damage2_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.additional_damage2_numericUpDown.Location = new System.Drawing.Point(236, 730);
-            this.additional_damage2_numericUpDown.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.additional_damage2_numericUpDown.Name = "additional_damage2_numericUpDown";
-            this.additional_damage2_numericUpDown.Size = new System.Drawing.Size(162, 30);
-            this.additional_damage2_numericUpDown.TabIndex = 37;
-            this.additional_damage2_numericUpDown.ValueChanged += new System.EventHandler(this.additional_damage2_numericUpDown_ValueChanged);
-            // 
             // additional_damage2_label
             // 
             this.additional_damage2_label.AutoSize = true;
@@ -403,41 +333,15 @@
             this.additional_damage2_label.TabIndex = 36;
             this.additional_damage2_label.Text = "Additional damage";
             // 
-            // damage_die2_count_numericUpDown
-            // 
-            this.damage_die2_count_numericUpDown.Enabled = false;
-            this.damage_die2_count_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die2_count_numericUpDown.Location = new System.Drawing.Point(183, 691);
-            this.damage_die2_count_numericUpDown.Name = "damage_die2_count_numericUpDown";
-            this.damage_die2_count_numericUpDown.Size = new System.Drawing.Size(47, 30);
-            this.damage_die2_count_numericUpDown.TabIndex = 35;
-            this.damage_die2_count_numericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.damage_die2_count_numericUpDown.ValueChanged += new System.EventHandler(this.damage_die2_count_numericUpDown_ValueChanged);
-            // 
-            // damage_die2_comboBox
-            // 
-            this.damage_die2_comboBox.Enabled = false;
-            this.damage_die2_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die2_comboBox.FormattingEnabled = true;
-            this.damage_die2_comboBox.Location = new System.Drawing.Point(236, 691);
-            this.damage_die2_comboBox.Name = "damage_die2_comboBox";
-            this.damage_die2_comboBox.Size = new System.Drawing.Size(161, 33);
-            this.damage_die2_comboBox.TabIndex = 34;
-            this.damage_die2_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_die2_comboBox_SelectedIndexChanged);
-            // 
             // damage_dice2_label
             // 
             this.damage_dice2_label.AutoSize = true;
             this.damage_dice2_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_dice2_label.Location = new System.Drawing.Point(41, 694);
             this.damage_dice2_label.Name = "damage_dice2_label";
-            this.damage_dice2_label.Size = new System.Drawing.Size(127, 25);
+            this.damage_dice2_label.Size = new System.Drawing.Size(155, 25);
             this.damage_dice2_label.TabIndex = 33;
-            this.damage_dice2_label.Text = "Damage dice";
+            this.damage_dice2_label.Text = "Damage formula";
             // 
             // hit_modifier2_label
             // 
@@ -549,21 +453,6 @@
             this.attack3_label.TabIndex = 51;
             this.attack3_label.Text = "Attack 3";
             // 
-            // additional_damage3_numericUpDown
-            // 
-            this.additional_damage3_numericUpDown.Enabled = false;
-            this.additional_damage3_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.additional_damage3_numericUpDown.Location = new System.Drawing.Point(233, 1070);
-            this.additional_damage3_numericUpDown.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
-            this.additional_damage3_numericUpDown.Name = "additional_damage3_numericUpDown";
-            this.additional_damage3_numericUpDown.Size = new System.Drawing.Size(162, 30);
-            this.additional_damage3_numericUpDown.TabIndex = 50;
-            this.additional_damage3_numericUpDown.ValueChanged += new System.EventHandler(this.additional_damage3_numericUpDown_ValueChanged);
-            // 
             // additional_damage3_label
             // 
             this.additional_damage3_label.AutoSize = true;
@@ -574,41 +463,15 @@
             this.additional_damage3_label.TabIndex = 49;
             this.additional_damage3_label.Text = "Additional damage";
             // 
-            // damage_die3_count_numericUpDown
-            // 
-            this.damage_die3_count_numericUpDown.Enabled = false;
-            this.damage_die3_count_numericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die3_count_numericUpDown.Location = new System.Drawing.Point(180, 1031);
-            this.damage_die3_count_numericUpDown.Name = "damage_die3_count_numericUpDown";
-            this.damage_die3_count_numericUpDown.Size = new System.Drawing.Size(47, 30);
-            this.damage_die3_count_numericUpDown.TabIndex = 48;
-            this.damage_die3_count_numericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.damage_die3_count_numericUpDown.ValueChanged += new System.EventHandler(this.damage_die3_count_numericUpDown_ValueChanged);
-            // 
-            // damage_die3_comboBox
-            // 
-            this.damage_die3_comboBox.Enabled = false;
-            this.damage_die3_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.damage_die3_comboBox.FormattingEnabled = true;
-            this.damage_die3_comboBox.Location = new System.Drawing.Point(233, 1031);
-            this.damage_die3_comboBox.Name = "damage_die3_comboBox";
-            this.damage_die3_comboBox.Size = new System.Drawing.Size(161, 33);
-            this.damage_die3_comboBox.TabIndex = 47;
-            this.damage_die3_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_die3_comboBox_SelectedIndexChanged);
-            // 
             // damage_dice3_label
             // 
             this.damage_dice3_label.AutoSize = true;
             this.damage_dice3_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_dice3_label.Location = new System.Drawing.Point(38, 1034);
             this.damage_dice3_label.Name = "damage_dice3_label";
-            this.damage_dice3_label.Size = new System.Drawing.Size(127, 25);
+            this.damage_dice3_label.Size = new System.Drawing.Size(155, 25);
             this.damage_dice3_label.TabIndex = 46;
-            this.damage_dice3_label.Text = "Damage dice";
+            this.damage_dice3_label.Text = "Damage formula";
             // 
             // hit_modifier3_label
             // 
@@ -845,10 +708,6 @@
             this.attack3_magical_checkBox.UseVisualStyleBackColor = true;
             this.attack3_magical_checkBox.CheckedChanged += new System.EventHandler(this.attack3_magical_checkBox_CheckedChanged);
             // 
-            // programBindingSource
-            // 
-            this.programBindingSource.DataSource = typeof(MinionMaster.Program);
-            // 
             // attack1_name_label
             // 
             this.attack1_name_label.AutoSize = true;
@@ -906,11 +765,46 @@
             this.attack3_name_label.TabIndex = 74;
             this.attack3_name_label.Text = "Attack name";
             // 
+            // programBindingSource
+            // 
+            this.programBindingSource.DataSource = typeof(MinionMaster.Program);
+            // 
+            // attack1_damage_formula_textBox
+            // 
+            this.attack1_damage_formula_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attack1_damage_formula_textBox.Location = new System.Drawing.Point(232, 338);
+            this.attack1_damage_formula_textBox.Name = "attack1_damage_formula_textBox";
+            this.attack1_damage_formula_textBox.Size = new System.Drawing.Size(167, 30);
+            this.attack1_damage_formula_textBox.TabIndex = 76;
+            this.attack1_damage_formula_textBox.TextChanged += new System.EventHandler(this.attack1_damage_formula_textBox_TextChanged);
+            // 
+            // attack2_damage_formula_textBox
+            // 
+            this.attack2_damage_formula_textBox.Enabled = false;
+            this.attack2_damage_formula_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attack2_damage_formula_textBox.Location = new System.Drawing.Point(236, 691);
+            this.attack2_damage_formula_textBox.Name = "attack2_damage_formula_textBox";
+            this.attack2_damage_formula_textBox.Size = new System.Drawing.Size(163, 30);
+            this.attack2_damage_formula_textBox.TabIndex = 77;
+            this.attack2_damage_formula_textBox.TextChanged += new System.EventHandler(this.attack2_damage_formula_textBox_TextChanged);
+            // 
+            // attack3_damage_formula_textBox
+            // 
+            this.attack3_damage_formula_textBox.Enabled = false;
+            this.attack3_damage_formula_textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.attack3_damage_formula_textBox.Location = new System.Drawing.Point(232, 1031);
+            this.attack3_damage_formula_textBox.Name = "attack3_damage_formula_textBox";
+            this.attack3_damage_formula_textBox.Size = new System.Drawing.Size(164, 30);
+            this.attack3_damage_formula_textBox.TabIndex = 78;
+            // 
             // MinionMasterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1832, 1318);
+            this.Controls.Add(this.attack3_damage_formula_textBox);
+            this.Controls.Add(this.attack2_damage_formula_textBox);
+            this.Controls.Add(this.attack1_damage_formula_textBox);
             this.Controls.Add(this.attack3_name_textBox);
             this.Controls.Add(this.attack3_name_label);
             this.Controls.Add(this.attack2_name_textBox);
@@ -936,10 +830,7 @@
             this.Controls.Add(this.target_resistance3_label);
             this.Controls.Add(this.attack3_enabled_checkBox);
             this.Controls.Add(this.attack3_label);
-            this.Controls.Add(this.additional_damage3_numericUpDown);
             this.Controls.Add(this.additional_damage3_label);
-            this.Controls.Add(this.damage_die3_count_numericUpDown);
-            this.Controls.Add(this.damage_die3_comboBox);
             this.Controls.Add(this.damage_dice3_label);
             this.Controls.Add(this.hit_modifier3_label);
             this.Controls.Add(this.advantage3_label);
@@ -949,10 +840,7 @@
             this.Controls.Add(this.target_resistance2_label);
             this.Controls.Add(this.attack2_enabled_checkBox);
             this.Controls.Add(this.attack2_label);
-            this.Controls.Add(this.additional_damage2_numericUpDown);
             this.Controls.Add(this.additional_damage2_label);
-            this.Controls.Add(this.damage_die2_count_numericUpDown);
-            this.Controls.Add(this.damage_die2_comboBox);
             this.Controls.Add(this.damage_dice2_label);
             this.Controls.Add(this.hit_modifier2_label);
             this.Controls.Add(this.advantage2_label);
@@ -970,10 +858,7 @@
             this.Controls.Add(this.target_resistance1_label);
             this.Controls.Add(this.target_ac_numericUpDown);
             this.Controls.Add(this.target_ac_label);
-            this.Controls.Add(this.additional_damage1_numericUpDown);
             this.Controls.Add(this.additional_damage1_label);
-            this.Controls.Add(this.damage_die1_count_numericUpDown);
-            this.Controls.Add(this.damage_die1_comboBox);
             this.Controls.Add(this.damage_dice1_label);
             this.Controls.Add(this.hit_modifier1_label);
             this.Controls.Add(this.advantage1_label);
@@ -982,15 +867,9 @@
             this.Name = "MinionMasterForm";
             this.Text = "Minion Master";
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier1_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die1_count_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage1_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.target_ac_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_minions_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage2_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die2_count_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier2_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.additional_damage3_numericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.damage_die3_count_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier3_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.attack1_count_numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.attack2_count_numericUpDown)).EndInit();
@@ -1007,10 +886,7 @@
         private System.Windows.Forms.Label advantage1_label;
         private System.Windows.Forms.Label hit_modifier1_label;
         private System.Windows.Forms.Label damage_dice1_label;
-        private System.Windows.Forms.ComboBox damage_die1_comboBox;
-        private System.Windows.Forms.NumericUpDown damage_die1_count_numericUpDown;
         private System.Windows.Forms.Label additional_damage1_label;
-        private System.Windows.Forms.NumericUpDown additional_damage1_numericUpDown;
         private System.Windows.Forms.Label target_ac_label;
         private System.Windows.Forms.NumericUpDown target_ac_numericUpDown;
         private System.Windows.Forms.Label target_resistance1_label;
@@ -1026,10 +902,7 @@
         private System.Windows.Forms.CheckBox attack1_enabled_checkBox;
         private System.Windows.Forms.CheckBox attack2_enabled_checkBox;
         private System.Windows.Forms.Label attack2_label;
-        private System.Windows.Forms.NumericUpDown additional_damage2_numericUpDown;
         private System.Windows.Forms.Label additional_damage2_label;
-        private System.Windows.Forms.NumericUpDown damage_die2_count_numericUpDown;
-        private System.Windows.Forms.ComboBox damage_die2_comboBox;
         private System.Windows.Forms.Label damage_dice2_label;
         private System.Windows.Forms.Label hit_modifier2_label;
         private System.Windows.Forms.Label advantage2_label;
@@ -1041,10 +914,7 @@
         private System.Windows.Forms.Label target_resistance3_label;
         private System.Windows.Forms.CheckBox attack3_enabled_checkBox;
         private System.Windows.Forms.Label attack3_label;
-        private System.Windows.Forms.NumericUpDown additional_damage3_numericUpDown;
         private System.Windows.Forms.Label additional_damage3_label;
-        private System.Windows.Forms.NumericUpDown damage_die3_count_numericUpDown;
-        private System.Windows.Forms.ComboBox damage_die3_comboBox;
         private System.Windows.Forms.Label damage_dice3_label;
         private System.Windows.Forms.Label hit_modifier3_label;
         private System.Windows.Forms.Label advantage3_label;
@@ -1071,6 +941,9 @@
         private System.Windows.Forms.Label attack2_name_label;
         private System.Windows.Forms.TextBox attack3_name_textBox;
         private System.Windows.Forms.Label attack3_name_label;
+        private System.Windows.Forms.TextBox attack1_damage_formula_textBox;
+        private System.Windows.Forms.TextBox attack2_damage_formula_textBox;
+        private System.Windows.Forms.TextBox attack3_damage_formula_textBox;
     }
 }
 

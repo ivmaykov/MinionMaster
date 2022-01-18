@@ -17,9 +17,7 @@ namespace MinionMaster
             NumericUpDown attackCount,
             ComboBox advantage,
             NumericUpDown hitModifier,
-            NumericUpDown damageDieCount,
-            ComboBox damageDieType,
-            NumericUpDown additionalDamage,
+            TextBox damageFormulaInput,
             ComboBox targetResistance,
             ComboBox damageType)
         {
@@ -31,10 +29,7 @@ namespace MinionMaster
             this.Advantage = advantage;
             this.Advantage.DataSource = Enum.GetValues(typeof(Advantage));
             this.HitModifier = hitModifier;
-            this.DamageDieCount = damageDieCount;
-            this.DamageDieType = damageDieType;
-            this.DamageDieType.DataSource = Enum.GetValues(typeof(DieType));
-            this.AdditionalDamage = additionalDamage;
+            this.DamageFormulaInput = damageFormulaInput;
             this.TargetResistance = targetResistance;
             this.TargetResistance.DataSource = Enum.GetValues(typeof(Resistance));
             this.DamageType = damageType;
@@ -49,9 +44,7 @@ namespace MinionMaster
             this.AttackCount.Enabled = isEnabled;
             this.Advantage.Enabled = isEnabled;
             this.HitModifier.Enabled = isEnabled;
-            this.DamageDieCount.Enabled = isEnabled;
-            this.DamageDieType.Enabled = isEnabled;
-            this.AdditionalDamage.Enabled = isEnabled;
+            this.DamageFormulaInput.Enabled = isEnabled;
             this.TargetResistance.Enabled = isEnabled;
             this.DamageType.Enabled = isEnabled;
         }
@@ -64,9 +57,7 @@ namespace MinionMaster
             this.AttackCount.Value = attackSpec.AttackCount;
             this.Advantage.Text = attackSpec.Advantage.ToString("G");
             this.HitModifier.Value = attackSpec.HitModifier;
-            this.DamageDieCount.Value = attackSpec.DamageDieCount;
-            this.DamageDieType.Text = attackSpec.DamageDieType.ToString("G");
-            this.AdditionalDamage.Value = attackSpec.AdditionalDamage;
+            this.DamageFormulaInput.Text = attackSpec.DamageFormula.ToText();
             this.TargetResistance.Text = attackSpec.TargetResistance.ToString("G");
             this.DamageType.Text = attackSpec.DamageType.ToString("G");
             this.onIsEnabledToggle();
@@ -101,21 +92,18 @@ namespace MinionMaster
         }
 
         internal NumericUpDown HitModifier { get; }
-        internal NumericUpDown DamageDieCount { get; }
-        internal ComboBox DamageDieType { get; }
+        internal TextBox DamageFormulaInput { get; }
+        internal DamageFormula ParseDamageFormula()
+        {
+            return DamageFormula.Parse(DamageFormulaInput.Text);
+        }
 
         internal DieType getDamageDieTypeEnum()
         {
-            string damageDieTypeString = this.DamageDieType.Text;
-            DieType damageDieType = (DieType)Enum.Parse(typeof(DieType), damageDieTypeString);
-            if (!Enum.IsDefined(typeof(DieType), damageDieType))
-            {
-                throw new Exception("Invalid DieType enum: " + damageDieTypeString);
-            }
-            return damageDieType;
+            var damageFormula = ParseDamageFormula();
+            return damageFormula.DamageDieType;
         }
 
-        internal NumericUpDown AdditionalDamage { get; }
         internal ComboBox TargetResistance { get; }
 
         internal Resistance getTargetResistanceEnum()

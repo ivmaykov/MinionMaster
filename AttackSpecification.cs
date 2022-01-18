@@ -15,9 +15,7 @@ namespace MinionMaster
             int attackCount,
             Advantage advantage,
             int hitModifier,
-            int damageDieCount,
-            DieType damageDieType,
-            int additionalDamage,
+            DamageFormula damageFormula,
             Resistance targetResistance,
             DamageType damageType)
         {
@@ -27,9 +25,7 @@ namespace MinionMaster
             this.AttackCount = attackCount;
             this.Advantage = advantage;
             this.HitModifier = hitModifier;
-            this.DamageDieCount = damageDieCount;
-            this.DamageDieType = damageDieType;
-            this.AdditionalDamage = additionalDamage;
+            this.DamageFormula = damageFormula;
             this.TargetResistance = targetResistance;
             this.DamageType = damageType;
         }
@@ -40,9 +36,8 @@ namespace MinionMaster
         internal int AttackCount { get; }
         internal Advantage Advantage { get; }
         internal int HitModifier { get; }
-        internal int DamageDieCount { get; }
-        internal DieType DamageDieType { get; }
-        internal int AdditionalDamage { get; }
+
+        internal DamageFormula DamageFormula { get; }
         internal Resistance TargetResistance { get; }
         internal DamageType DamageType { get; }
 

@@ -27,9 +27,7 @@ namespace MinionMaster
                 this.attack1_count_numericUpDown,
                 this.advantage1_comboBox,
                 this.hit_modifier1_numericUpDown,
-                this.damage_die1_count_numericUpDown,
-                this.damage_die1_comboBox,
-                this.additional_damage1_numericUpDown,
+                this.attack1_damage_formula_textBox,
                 this.target_resistance1_comboBox,
                 this.damage_type1_comboBox));
             attacks.Add(new AttackUiComponents(
@@ -40,9 +38,7 @@ namespace MinionMaster
                 this.attack2_count_numericUpDown,
                 this.advantage2_comboBox,
                 this.hit_modifier2_numericUpDown,
-                this.damage_die2_count_numericUpDown,
-                this.damage_die2_comboBox,
-                this.additional_damage2_numericUpDown,
+                this.attack2_damage_formula_textBox,
                 this.target_resistance2_comboBox,
                 this.damage_type2_comboBox));
             attacks.Add(new AttackUiComponents(
@@ -53,9 +49,7 @@ namespace MinionMaster
                 this.attack3_count_numericUpDown,
                 this.advantage3_comboBox,
                 this.hit_modifier3_numericUpDown,
-                this.damage_die3_count_numericUpDown,
-                this.damage_die3_comboBox,
-                this.additional_damage3_numericUpDown,
+                this.attack3_damage_formula_textBox,
                 this.target_resistance3_comboBox,
                 this.damage_type3_comboBox));
             this.preset_comboBox.DataSource = Presets.Values.Keys.ToList();
@@ -80,13 +74,13 @@ namespace MinionMaster
 
         private void rollTheDiceForAttack(AttackUiComponents attackUi)
         {
-            int numMinions = (int) this.num_minions_numericUpDown.Value;
-            int numDamageDice = (int) attackUi.DamageDieCount.Value;
-            DieType damageDieType = (DieType) Enum.Parse(typeof(DieType), attackUi.DamageDieType.Text);
-            if (!Enum.IsDefined(typeof(DieType), damageDieType))
+            if (!attackUi.IsEnabled.Checked)
             {
-                throw new Exception("Invalid DieType enum: " + attackUi.DamageDieType.Text);
+                return;
             }
+            int numMinions = (int) this.num_minions_numericUpDown.Value;
+            int numDamageDice = (int) attackUi.ParseDamageFormula().DamageDieCount;
+            DieType damageDieType = attackUi.ParseDamageFormula().DamageDieType;
             DamageType damageType = (DamageType) Enum.Parse(typeof(DamageType), attackUi.DamageType.Text);
             if (!Enum.IsDefined(typeof(DamageType), damageType))
             {
@@ -120,15 +114,7 @@ namespace MinionMaster
 
         private string renderAttackHeader(AttackUiComponents attackUi)
         {
-            string outputText = $"\t{attackUi.GetDisplayName()}: {attackUi.DamageDieCount.Value}{attackUi.DamageDieType.Text}";
-            if (attackUi.AdditionalDamage.Value > 0)
-            {
-                outputText += $"+{attackUi.AdditionalDamage.Value}";
-            }
-            else if (attackUi.AdditionalDamage.Value < 0)
-            {
-                outputText += $"{attackUi.AdditionalDamage.Value}";
-            }
+            string outputText = $"\t{attackUi.GetDisplayName()}: {attackUi.DamageFormulaInput.Text}";
             if (attackUi.IsMagical.Checked)
             {
                 outputText += " magical";
@@ -204,13 +190,13 @@ namespace MinionMaster
                 {
                     totalCrits++;
                 }
-                int damageDone = r.DamageRoll.getDamageResult(attackResult, attackUi.getTargetResistanceEnum(), (int) attackUi.AdditionalDamage.Value);
+                int damageDone = r.DamageRoll.getDamageResult(attackResult, attackUi.getTargetResistanceEnum(), (int) attackUi.ParseDamageFormula().AdditionalDamage);
                 DamageType damageType = attackUi.getDamageTypeEnum();
                 bool isMagical = attackUi.IsMagical.Checked;
                 outputText += ", doing " + r.DamageRoll.describe(
                     attackResult,
                     attackUi.getTargetResistanceEnum(),
-                    (int) attackUi.AdditionalDamage.Value,
+                    (int) attackUi.ParseDamageFormula().AdditionalDamage,
                     isMagical,
                     damageType);
                 outputText += Environment.NewLine;
@@ -252,12 +238,6 @@ namespace MinionMaster
             renderRollResults();
         }
 
-        private void damage_die1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
-            renderRollResults();
-        }
-
         private void target_resistance1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderRollResults();
@@ -265,12 +245,6 @@ namespace MinionMaster
 
         private void hit_modifier1_numericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            renderRollResults();
-        }
-
-        private void damage_die1_count_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
             renderRollResults();
         }
 
@@ -286,11 +260,6 @@ namespace MinionMaster
         private void num_minions_numericUpDown_ValueChanged(object sender, EventArgs e)
         {
             rolls.Clear();
-            renderRollResults();
-        }
-
-        private void additional_damage1_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
             renderRollResults();
         }
 
@@ -341,23 +310,6 @@ namespace MinionMaster
             renderRollResults();
         }
 
-        private void damage_die2_count_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
-            renderRollResults();
-        }
-
-        private void damage_die2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
-            renderRollResults();
-        }
-
-        private void additional_damage2_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            renderRollResults();
-        }
-
         private void target_resistance2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderRollResults();
@@ -376,22 +328,6 @@ namespace MinionMaster
         }
 
         private void hit_modifier3_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            renderRollResults();
-        }
-
-        private void damage_die3_count_numericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
-            renderRollResults();
-        }
-
-        private void damage_die3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            rolls.Clear();
-            renderRollResults();
-        }
-        private void additional_damage3_numericUpDown_ValueChanged(object sender, EventArgs e)
         {
             renderRollResults();
         }
@@ -461,6 +397,24 @@ namespace MinionMaster
 
         private void attack3_name_textBox_TextChanged(object sender, EventArgs e)
         {
+            renderRollResults();
+        }
+
+        private void attack1_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void attack2_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void attack3_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
             renderRollResults();
         }
     }

@@ -43,7 +43,7 @@ namespace MinionMaster
 
         private int computeDamage(List<int> allDice, Resistance resistance, int additionalDamage)
         {
-            int damage = additionalDamage + allDice.Aggregate((x, y) => x + y);
+            int damage = additionalDamage + allDice.Aggregate(0, (x, y) => x + y);
             if (Resistance.Resistant == resistance)
             {
                 return Math.Max(1, damage / 2);
