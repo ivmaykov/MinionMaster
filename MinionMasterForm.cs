@@ -23,6 +23,7 @@ namespace MinionMaster
                 1,
                 this.attack1_enabled_checkBox,
                 this.attack1_magical_checkBox,
+                this.attack1_name_textBox,
                 this.attack1_count_numericUpDown,
                 this.advantage1_comboBox,
                 this.hit_modifier1_numericUpDown,
@@ -35,6 +36,7 @@ namespace MinionMaster
                 2,
                 this.attack2_enabled_checkBox,
                 this.attack2_magical_checkBox,
+                this.attack2_name_textBox,
                 this.attack2_count_numericUpDown,
                 this.advantage2_comboBox,
                 this.hit_modifier2_numericUpDown,
@@ -47,6 +49,7 @@ namespace MinionMaster
                 3,
                 this.attack3_enabled_checkBox,
                 this.attack3_magical_checkBox,
+                this.attack3_name_textBox,
                 this.attack3_count_numericUpDown,
                 this.advantage3_comboBox,
                 this.hit_modifier3_numericUpDown,
@@ -55,6 +58,7 @@ namespace MinionMaster
                 this.additional_damage3_numericUpDown,
                 this.target_resistance3_comboBox,
                 this.damage_type3_comboBox));
+            this.preset_comboBox.DataSource = Presets.Values.Keys.ToList();
             this.output_textBox.Text = "Press the ROLL button!";
         }
 
@@ -76,14 +80,14 @@ namespace MinionMaster
 
         private void rollTheDiceForAttack(AttackUiComponents attackUi)
         {
-            int numMinions = (int)this.num_minions_numericUpDown.Value;
-            int numDamageDice = (int)attackUi.DamageDieCount.Value;
+            int numMinions = (int) this.num_minions_numericUpDown.Value;
+            int numDamageDice = (int) attackUi.DamageDieCount.Value;
             DieType damageDieType = (DieType) Enum.Parse(typeof(DieType), attackUi.DamageDieType.Text);
             if (!Enum.IsDefined(typeof(DieType), damageDieType))
             {
                 throw new Exception("Invalid DieType enum: " + attackUi.DamageDieType.Text);
             }
-            DamageType damageType = (DamageType)Enum.Parse(typeof(DamageType), attackUi.DamageType.Text);
+            DamageType damageType = (DamageType) Enum.Parse(typeof(DamageType), attackUi.DamageType.Text);
             if (!Enum.IsDefined(typeof(DamageType), damageType))
             {
                 throw new Exception("Invalid DamageType enum: " + attackUi.DamageType.Text);
@@ -116,11 +120,12 @@ namespace MinionMaster
 
         private string renderAttackHeader(AttackUiComponents attackUi)
         {
-            String outputText = $"\tAttack {attackUi.AttackTypeIndex}: {attackUi.DamageDieCount.Value}{attackUi.DamageDieType.Text}";
+            string outputText = $"\t{attackUi.GetDisplayName()}: {attackUi.DamageDieCount.Value}{attackUi.DamageDieType.Text}";
             if (attackUi.AdditionalDamage.Value > 0)
             {
                 outputText += $"+{attackUi.AdditionalDamage.Value}";
-            } else if (attackUi.AdditionalDamage.Value < 0)
+            }
+            else if (attackUi.AdditionalDamage.Value < 0)
             {
                 outputText += $"{attackUi.AdditionalDamage.Value}";
             }
@@ -151,8 +156,8 @@ namespace MinionMaster
                 this.output_textBox.Text = "Press the ROLL button!";
                 return;
             }
-            int numMinions = (int)this.num_minions_numericUpDown.Value;
-            int targetAC = (int)this.target_ac_numericUpDown.Value;
+            int numMinions = (int) this.num_minions_numericUpDown.Value;
+            int targetAC = (int) this.target_ac_numericUpDown.Value;
             String outputText = $"Rolling attacks for {numMinions} minions vs AC {targetAC}{Environment.NewLine}";
             foreach (AttackUiComponents attack in attacks)
             {
@@ -162,7 +167,7 @@ namespace MinionMaster
                 }
             }
 
-            Dictionary<(DamageType, bool), int> damageTotalsByType = new Dictionary<(DamageType, bool), int>();
+            Dictionary<string, int> damageTotalsByType = new Dictionary<string, int>();
             int totalHits = 0;
             int totalCrits = 0;
             int totalMisses = 0;
@@ -175,9 +180,9 @@ namespace MinionMaster
                 {
                     continue;
                 }
-                outputText += $"Minion {r.MinionIndex}, attack type {r.AttackTypeIndex}, attack count {r.AttackCountIndex}: ";
+                outputText += $"Minion {r.MinionIndex} {attackUi.GetDisplayName()}, attack #{r.AttackCountIndex}: ";
                 outputText += r.AttackRoll.describe(attackUi.getAdvantageEnum(), (int) attackUi.HitModifier.Value, targetAC);
-                AttackResult attackResult = r.AttackRoll.getAttackResult(attackUi.getAdvantageEnum(), (int)attackUi.HitModifier.Value, targetAC);
+                AttackResult attackResult = r.AttackRoll.getAttackResult(attackUi.getAdvantageEnum(), (int) attackUi.HitModifier.Value, targetAC);
                 if (AttackResult.Miss == attackResult)
                 {
                     totalMisses++;
@@ -195,31 +200,50 @@ namespace MinionMaster
                 {
                     totalHits++;
                 }
-                else {
+                else
+                {
                     totalCrits++;
                 }
-                int damageDone = r.DamageRoll.getDamageResult(attackResult, attackUi.getTargetResistanceEnum(), (int)attackUi.AdditionalDamage.Value);
+                int damageDone = r.DamageRoll.getDamageResult(attackResult, attackUi.getTargetResistanceEnum(), (int) attackUi.AdditionalDamage.Value);
                 DamageType damageType = attackUi.getDamageTypeEnum();
                 bool isMagical = attackUi.IsMagical.Checked;
                 outputText += ", doing " + r.DamageRoll.describe(
                     attackResult,
                     attackUi.getTargetResistanceEnum(),
-                    (int)attackUi.AdditionalDamage.Value,
+                    (int) attackUi.AdditionalDamage.Value,
                     isMagical,
                     damageType);
                 outputText += Environment.NewLine;
-                if (damageTotalsByType.ContainsKey((damageType, isMagical))) {
-                    damageTotalsByType[(damageType, isMagical)] += damageDone;
-                } else
+                string damageTypeDesc = "";
+                if (isMagical)
                 {
-                    damageTotalsByType[(damageType, isMagical)] = damageDone;
+                    damageTypeDesc = $"Magical {damageType}";
+                }
+                else
+                {
+                    damageTypeDesc = damageType.ToString();
+                }
+                if (damageTotalsByType.ContainsKey(damageTypeDesc))
+                {
+                    damageTotalsByType[damageTypeDesc] += damageDone;
+                }
+                else
+                {
+                    damageTotalsByType[damageTypeDesc] = damageDone;
                 }
             }
             outputText += "Crits: " + totalCrits + ", hits: " + totalHits + ", misses: " + totalMisses;
             outputText += ", crit fails: " + totalCritFails;
             outputText += Environment.NewLine;
-            outputText += "Total damage done by type: " + Environment.NewLine;
-            outputText += damageTotalsByType.Select((k, v) => $"{k}: {v}").Aggregate((x, y) => $"{x}{Environment.NewLine}{y}");
+            if (damageTotalsByType.Count > 0)
+            {
+                outputText += "Total damage done by type: " + Environment.NewLine;
+                outputText += damageTotalsByType.Select((entry) => $"{entry.Key}: {entry.Value}").Aggregate((x, y) => $"{x}{Environment.NewLine}{y}");
+            }
+            else
+            {
+                outputText += "Total damage done: 0" + Environment.NewLine;
+            }
             this.output_textBox.Text = outputText;
         }
 
@@ -270,39 +294,26 @@ namespace MinionMaster
             renderRollResults();
         }
 
-        private void applyPreset(int numAttacks, int hitModifier, int damageDieCount, DieType damageDie, int additionalDamage, Advantage advantage)
+        private void applyPreset(Preset preset)
         {
-            this.num_minions_numericUpDown.Value = numAttacks;
-            this.hit_modifier1_numericUpDown.Value = hitModifier;
-            this.damage_die1_count_numericUpDown.Value = damageDieCount;
-            this.damage_die1_comboBox.Text = damageDie.ToString("G");
-            this.additional_damage1_numericUpDown.Value = additionalDamage;
-            this.advantage1_comboBox.Text = advantage.ToString("G");
+            int i = 0;
+            foreach (AttackSpecification attackSpec in preset.Attacks)
+            {
+                this.attacks.ElementAt(i).populateFromSpecification(attackSpec);
+                i++;
+            }
+            for (; i < this.attacks.Count; i++)
+            {
+                this.attacks.ElementAt(i).IsEnabled.Checked = false;
+                this.attacks.ElementAt(i).onIsEnabledToggle();
+            }
+            this.num_minions_numericUpDown.Value = preset.MinionCount;
         }
 
         private void preset_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch(preset_comboBox.Text)
-            {
-                case "Animate Objects: 10 Tiny":
-                    applyPreset(10, 8, 1, DieType.d4, 4, Advantage.None);
-                    break;
-                case "Animate Objects: 10 Small":
-                    applyPreset(10, 6, 1, DieType.d8, 2, Advantage.None);
-                    break;
-                case "Animate Objects: 5 Medium":
-                    applyPreset(5, 5, 2, DieType.d6, 1, Advantage.None);
-                    break;
-                case "Animate Objects: 2 Large":
-                    applyPreset(2, 6, 2, DieType.d10, 2, Advantage.None);
-                    break;
-                case "Animate Objects: 1 Huge":
-                    applyPreset(1, 8, 2, DieType.d12, 4, Advantage.None);
-                    break;
-                case "Conjure Animals: 8 wolves":
-                    applyPreset(8, 4, 2, DieType.d4, 2, Advantage.Advantage /* Pack Tactics */);
-                    break;
-            }
+            Preset preset = Presets.Values[preset_comboBox.Text];
+            applyPreset(preset);
             rolls.Clear();
             renderRollResults();
         }
@@ -315,6 +326,7 @@ namespace MinionMaster
 
         private void attack2_enabled_checkBox_CheckedChanged(object sender, EventArgs e)
         {
+            attacks.ElementAt(1).onIsEnabledToggle();
             rolls.Clear();
             renderRollResults();
         }
@@ -353,6 +365,7 @@ namespace MinionMaster
 
         private void attack3_enabled_checkBox_CheckedChanged(object sender, EventArgs e)
         {
+            attacks.ElementAt(2).onIsEnabledToggle();
             rolls.Clear();
             renderRollResults();
         }
@@ -432,6 +445,21 @@ namespace MinionMaster
         }
 
         private void attack3_magical_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void attack1_name_textBox_TextChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void attack2_name_textBox_TextChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void attack3_name_textBox_TextChanged(object sender, EventArgs e)
         {
             renderRollResults();
         }

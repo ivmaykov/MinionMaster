@@ -13,6 +13,7 @@ namespace MinionMaster
             int attackTypeIndex,
             CheckBox isEnabled,
             CheckBox isMagical,
+            TextBox name,
             NumericUpDown attackCount,
             ComboBox advantage,
             NumericUpDown hitModifier,
@@ -25,6 +26,7 @@ namespace MinionMaster
             this.AttackTypeIndex = attackTypeIndex;
             this.IsEnabled = isEnabled;
             this.IsMagical = isMagical;
+            this.Name = name;
             this.AttackCount = attackCount;
             this.Advantage = advantage;
             this.Advantage.DataSource = Enum.GetValues(typeof(Advantage));
@@ -39,9 +41,51 @@ namespace MinionMaster
             this.DamageType.DataSource = Enum.GetValues(typeof(DamageType));
         }
 
+        internal void onIsEnabledToggle()
+        {
+            bool isEnabled = this.IsEnabled.Checked;
+            this.IsMagical.Enabled = isEnabled;
+            this.Name.Enabled = isEnabled;
+            this.AttackCount.Enabled = isEnabled;
+            this.Advantage.Enabled = isEnabled;
+            this.HitModifier.Enabled = isEnabled;
+            this.DamageDieCount.Enabled = isEnabled;
+            this.DamageDieType.Enabled = isEnabled;
+            this.AdditionalDamage.Enabled = isEnabled;
+            this.TargetResistance.Enabled = isEnabled;
+            this.DamageType.Enabled = isEnabled;
+        }
+
+        internal void populateFromSpecification(AttackSpecification attackSpec)
+        {
+            this.IsEnabled.Checked = attackSpec.IsEnabled;
+            this.IsMagical.Checked = attackSpec.IsMagical;
+            this.Name.Text = attackSpec.Name;
+            this.AttackCount.Value = attackSpec.AttackCount;
+            this.Advantage.Text = attackSpec.Advantage.ToString("G");
+            this.HitModifier.Value = attackSpec.HitModifier;
+            this.DamageDieCount.Value = attackSpec.DamageDieCount;
+            this.DamageDieType.Text = attackSpec.DamageDieType.ToString("G");
+            this.AdditionalDamage.Value = attackSpec.AdditionalDamage;
+            this.TargetResistance.Text = attackSpec.TargetResistance.ToString("G");
+            this.DamageType.Text = attackSpec.DamageType.ToString("G");
+            this.onIsEnabledToggle();
+        }
+
         internal int AttackTypeIndex { get; }
         internal CheckBox IsEnabled { get; }
         internal CheckBox IsMagical { get; }
+        internal TextBox Name { get; }
+        internal string GetDisplayName()
+        {
+            if (this.Name.Text.Length == 0)
+            {
+                return $"attack type {this.AttackTypeIndex}";
+            } else
+            {
+                return this.Name.Text;
+            }
+        }
         internal NumericUpDown AttackCount { get; }
         internal ComboBox Advantage { get; }
 
