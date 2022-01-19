@@ -86,12 +86,12 @@ namespace MinionMaster
             this.output_textBox.Text = "Press the ROLL button!";
         }
 
-        private List<int> multiRollDamageDice(int dieCount, DieType dieType)
+        private List<int> multiRollDamageDice(int dieCount, Die die)
         {
             List<int> result = new List<int>();
             for (int i = 0; i < dieCount; i++)
             {
-                result.Add(dieType.roll());
+                result.Add(die.roll());
             }
             return result;
         }
@@ -118,7 +118,7 @@ namespace MinionMaster
             }
             int numMinions = (int) this.num_minions_numericUpDown.Value;
             int numDamageDice = (int) attackUi.ParseDamageFormula().DamageDieCount;
-            DieType damageDieType = attackUi.ParseDamageFormula().DamageDieType;
+            Die damageDie = attackUi.ParseDamageFormula().DamageDie;
 
             for (int m = 1; m <= numMinions; m++)
             {
@@ -128,19 +128,19 @@ namespace MinionMaster
                     if (attackUi.HasExtraDamage.Checked)
                     {
                         int numExtraDamageDice = (int) attackUi.ParseExtraDamageFormula().DamageDieCount;
-                        DieType extraDamageDieType = attackUi.ParseExtraDamageFormula().DamageDieType;
+                        Die extraDamageDie = attackUi.ParseExtraDamageFormula().DamageDie;
                         extraDamageRoll = new DamageRoll(
-                            multiRollDamageDice(numExtraDamageDice, extraDamageDieType),
-                            multiRollDamageDice(numExtraDamageDice, extraDamageDieType));
+                            multiRollDamageDice(numExtraDamageDice, extraDamageDie),
+                            multiRollDamageDice(numExtraDamageDice, extraDamageDie));
                     }
                     rolls.Add(new AttackAndDamageRoll(
                         m,
                         attackUi.AttackTypeIndex,
                         a,
-                        new AttackRoll(DieType.d20.roll(), DieType.d20.roll()),
+                        new AttackRoll(Die.d20.roll(), Die.d20.roll()),
                         new DamageRoll(
-                            multiRollDamageDice(numDamageDice, damageDieType),
-                            multiRollDamageDice(numDamageDice, damageDieType)),
+                            multiRollDamageDice(numDamageDice, damageDie),
+                            multiRollDamageDice(numDamageDice, damageDie)),
                         extraDamageRoll));
                 }
             }

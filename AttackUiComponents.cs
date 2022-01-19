@@ -189,12 +189,6 @@ namespace MinionMaster
             return DamageFormula.Parse(DamageFormulaInput.Text);
         }
 
-        internal DieType getDamageDieTypeEnum()
-        {
-            var damageFormula = ParseDamageFormula();
-            return damageFormula.DamageDieType;
-        }
-
         internal ComboBox TargetResistance { get; }
 
         internal Resistance getTargetResistanceEnum()

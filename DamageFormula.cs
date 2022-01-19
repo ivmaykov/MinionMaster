@@ -17,31 +17,27 @@ namespace MinionMaster
             if (match.Success)
             {
                 int additionalDamage = Int32.Parse(match.Groups[1].Value);
-                return new DamageFormula(0, DieType.d2, additionalDamage);
+                return new DamageFormula(0, new Die(1), additionalDamage);
             }
             match = DieFormulaPattern.Match(str);
             if (match.Success)
             {
                 int dieCount = Int32.Parse(match.Groups[1].Value);
-                DieType dieType = (DieType) Enum.Parse(typeof(DieType), match.Groups[2].Value);
-                if (!Enum.IsDefined(typeof(DieType), dieType))
-                {
-                    throw new Exception($"Invalid die type in damage formula: {match.Groups[2].Value}");
-                }
+                Die damageDie = Die.Parse(match.Groups[2].Value);
                 int additionalDamage = 0;
                 if (match.Groups[3].Length > 0)
                 {
                     additionalDamage = Int32.Parse(match.Groups[3].Value);
                 }
-                return new DamageFormula(dieCount, dieType, additionalDamage);
+                return new DamageFormula(dieCount, damageDie, additionalDamage);
             }
             throw new Exception($"Could not parse damage formula: '{str}'");
         }
 
-        internal DamageFormula(int damageDieCount, DieType damageDieType, int additionalDamage)
+        internal DamageFormula(int damageDieCount, Die damageDie, int additionalDamage)
         {
             this.DamageDieCount = damageDieCount;
-            this.DamageDieType = damageDieType;
+            this.DamageDie = damageDie;
             this.AdditionalDamage = additionalDamage;
         }
 
@@ -53,21 +49,21 @@ namespace MinionMaster
             }
             else if (this.AdditionalDamage > 0)
             {
-                return $"{this.DamageDieCount}{this.DamageDieType.ToString("G")}+{this.AdditionalDamage}";
+                return $"{this.DamageDieCount}{this.DamageDie}+{this.AdditionalDamage}";
 
             }
             else if (this.AdditionalDamage < 0)
             {
-                return $"{this.DamageDieCount}{this.DamageDieType.ToString("G")}{this.AdditionalDamage}";
+                return $"{this.DamageDieCount}{this.DamageDie}{this.AdditionalDamage}";
             }
             else
             {
-                return $"{this.DamageDieCount}{this.DamageDieType.ToString("G")}";
+                return $"{this.DamageDieCount}{this.DamageDie}";
             }
         }
 
         internal int DamageDieCount { get; }
-        internal DieType DamageDieType { get; }
+        internal Die DamageDie { get; }
         internal int AdditionalDamage { get; }
     }
 }

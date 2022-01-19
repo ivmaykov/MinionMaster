@@ -57,7 +57,7 @@
     <Compile Include="DamageOnSaveFailure.cs" />
     <Compile Include="DamageRoll.cs" />
     <Compile Include="DamageType.cs" />
-    <Compile Include="DieType.cs" />
+    <Compile Include="Die.cs" />
     <Compile Include="ExtraDamageSpecification.cs" />
     <Compile Include="MinionMasterForm.cs">
       <SubType>Form</SubType>
