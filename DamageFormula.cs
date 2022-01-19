@@ -26,7 +26,7 @@ namespace MinionMaster
                 DieType dieType = (DieType) Enum.Parse(typeof(DieType), match.Groups[2].Value);
                 if (!Enum.IsDefined(typeof(DieType), dieType))
                 {
-                    throw new Exception("Invalid die type in damage formula: " + match.Groups[2].Value);
+                    throw new Exception($"Invalid die type in damage formula: {match.Groups[2].Value}");
                 }
                 int additionalDamage = 0;
                 if (match.Groups[3].Length > 0)
@@ -35,7 +35,7 @@ namespace MinionMaster
                 }
                 return new DamageFormula(dieCount, dieType, additionalDamage);
             }
-            throw new Exception($"Could not parse damage formula:'{str}'");
+            throw new Exception($"Could not parse damage formula: '{str}'");
         }
 
         internal DamageFormula(int damageDieCount, DieType damageDieType, int additionalDamage)

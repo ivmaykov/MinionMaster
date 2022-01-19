@@ -28,7 +28,7 @@ namespace MinionMaster
                 case Advantage.Disadvantage:
                     return Math.Min(FirstRoll, SecondRoll);
                 default:
-                    throw new Exception("Invalid advantage enum value");
+                    throw new Exception($"Invalid advantage enum value: {advantage}");
             }
         }
 

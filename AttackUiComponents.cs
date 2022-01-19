@@ -177,7 +177,7 @@ namespace MinionMaster
             Advantage advantage = (Advantage)Enum.Parse(typeof(Advantage), advantageString);
             if (!Enum.IsDefined(typeof(Advantage), advantage))
             {
-                throw new Exception("Invalid Advantage enum: " + advantageString);
+                throw new Exception($"Invalid Advantage string: {advantageString}");
             }
             return advantage;
         }
@@ -238,7 +238,7 @@ namespace MinionMaster
             Ability ability = (Ability) Enum.Parse(typeof(Ability), abilityString);
             if (!Enum.IsDefined(typeof(Ability), ability))
             {
-                throw new Exception("Invalid DamageType enum: " + abilityString);
+                throw new Exception($"Invalid Ability string: {abilityString}");
             }
             return ability;
         }
@@ -252,7 +252,7 @@ namespace MinionMaster
             DamageOnSaveFailure enumValue = (DamageOnSaveFailure) Enum.Parse(typeof(DamageOnSaveFailure), enumString);
             if (!Enum.IsDefined(typeof(DamageOnSaveFailure), enumValue))
             {
-                throw new Exception("Invalid DamageOnSaveFailure enum: " + enumString);
+                throw new Exception($"Invalid DamageOnSaveFailure string: {enumString}");
             }
             return enumValue;
         }
@@ -262,7 +262,7 @@ namespace MinionMaster
             DamageType damageType = (DamageType) Enum.Parse(typeof(DamageType), damageTypeString);
             if (!Enum.IsDefined(typeof(DamageType), damageType))
             {
-                throw new Exception("Invalid DamageType enum: " + damageTypeString);
+                throw new Exception($"Invalid DamageType string: {damageTypeString}");
             }
             return damageType;
         }
@@ -272,7 +272,7 @@ namespace MinionMaster
             Resistance resistance = (Resistance) Enum.Parse(typeof(Resistance), resistanceString);
             if (!Enum.IsDefined(typeof(Resistance), resistance))
             {
-                throw new Exception("Invalid Resistance enum: " + resistanceString);
+                throw new Exception($"Invalid Resistance string: {resistanceString}");
             }
             return resistance;
         }

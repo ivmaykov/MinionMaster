@@ -133,13 +133,13 @@
             this.minion_name_label = new System.Windows.Forms.Label();
             this.minion_name_textBox = new System.Windows.Forms.TextBox();
             this.allow_multi_attack_checkBox = new System.Windows.Forms.CheckBox();
-            this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.extra_damage_note1_label = new System.Windows.Forms.Label();
             this.extra_damage_note1_textBox = new System.Windows.Forms.TextBox();
             this.extra_damage_note2_textBox = new System.Windows.Forms.TextBox();
             this.extra_damage_note2_label = new System.Windows.Forms.Label();
             this.extra_damage_note3_textBox = new System.Windows.Forms.TextBox();
             this.extra_damage_note3_label = new System.Windows.Forms.Label();
+            this.programBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.hit_modifier1_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.target_ac_numericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_minions_numericUpDown)).BeginInit();
@@ -634,8 +634,10 @@
             this.damage_type1_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_type1_comboBox.FormattingEnabled = true;
             this.damage_type1_comboBox.Location = new System.Drawing.Point(445, 296);
+            this.damage_type1_comboBox.MaxDropDownItems = 13;
             this.damage_type1_comboBox.Name = "damage_type1_comboBox";
             this.damage_type1_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.damage_type1_comboBox.Sorted = true;
             this.damage_type1_comboBox.TabIndex = 62;
             this.damage_type1_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_type1_comboBox_SelectedIndexChanged);
             // 
@@ -645,8 +647,10 @@
             this.damage_type2_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_type2_comboBox.FormattingEnabled = true;
             this.damage_type2_comboBox.Location = new System.Drawing.Point(445, 649);
+            this.damage_type2_comboBox.MaxDropDownItems = 13;
             this.damage_type2_comboBox.Name = "damage_type2_comboBox";
             this.damage_type2_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.damage_type2_comboBox.Sorted = true;
             this.damage_type2_comboBox.TabIndex = 64;
             this.damage_type2_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_type2_comboBox_SelectedIndexChanged);
             // 
@@ -656,8 +660,10 @@
             this.damage_type3_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.damage_type3_comboBox.FormattingEnabled = true;
             this.damage_type3_comboBox.Location = new System.Drawing.Point(445, 986);
+            this.damage_type3_comboBox.MaxDropDownItems = 13;
             this.damage_type3_comboBox.Name = "damage_type3_comboBox";
             this.damage_type3_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.damage_type3_comboBox.Sorted = true;
             this.damage_type3_comboBox.TabIndex = 66;
             this.damage_type3_comboBox.SelectedIndexChanged += new System.EventHandler(this.damage_type3_comboBox_SelectedIndexChanged);
             // 
@@ -800,8 +806,10 @@
             this.extra_damage_type1_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extra_damage_type1_comboBox.FormattingEnabled = true;
             this.extra_damage_type1_comboBox.Location = new System.Drawing.Point(445, 414);
+            this.extra_damage_type1_comboBox.MaxDropDownItems = 13;
             this.extra_damage_type1_comboBox.Name = "extra_damage_type1_comboBox";
             this.extra_damage_type1_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.extra_damage_type1_comboBox.Sorted = true;
             this.extra_damage_type1_comboBox.TabIndex = 80;
             this.extra_damage_type1_comboBox.SelectedIndexChanged += new System.EventHandler(this.extra_damage_type1_comboBox_SelectedIndexChanged);
             // 
@@ -1113,8 +1121,10 @@
             this.extra_damage_type2_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extra_damage_type2_comboBox.FormattingEnabled = true;
             this.extra_damage_type2_comboBox.Location = new System.Drawing.Point(444, 764);
+            this.extra_damage_type2_comboBox.MaxDropDownItems = 13;
             this.extra_damage_type2_comboBox.Name = "extra_damage_type2_comboBox";
             this.extra_damage_type2_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.extra_damage_type2_comboBox.Sorted = true;
             this.extra_damage_type2_comboBox.TabIndex = 97;
             this.extra_damage_type2_comboBox.SelectedIndexChanged += new System.EventHandler(this.extra_damage_type2_comboBox_SelectedIndexChanged);
             // 
@@ -1285,8 +1295,10 @@
             this.extra_damage_type3_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.extra_damage_type3_comboBox.FormattingEnabled = true;
             this.extra_damage_type3_comboBox.Location = new System.Drawing.Point(444, 1106);
+            this.extra_damage_type3_comboBox.MaxDropDownItems = 13;
             this.extra_damage_type3_comboBox.Name = "extra_damage_type3_comboBox";
             this.extra_damage_type3_comboBox.Size = new System.Drawing.Size(160, 33);
+            this.extra_damage_type3_comboBox.Sorted = true;
             this.extra_damage_type3_comboBox.TabIndex = 112;
             this.extra_damage_type3_comboBox.SelectedIndexChanged += new System.EventHandler(this.extra_damage_type3_comboBox_SelectedIndexChanged);
             // 
@@ -1330,10 +1342,6 @@
             this.allow_multi_attack_checkBox.Text = "Allow multi-attack";
             this.allow_multi_attack_checkBox.UseVisualStyleBackColor = true;
             this.allow_multi_attack_checkBox.CheckedChanged += new System.EventHandler(this.allow_multi_attack_checkBox_CheckedChanged);
-            // 
-            // programBindingSource
-            // 
-            this.programBindingSource.DataSource = typeof(MinionMaster.Program);
             // 
             // extra_damage_note1_label
             // 
@@ -1394,6 +1402,10 @@
             this.extra_damage_note3_label.Size = new System.Drawing.Size(53, 25);
             this.extra_damage_note3_label.TabIndex = 132;
             this.extra_damage_note3_label.Text = "Note";
+            // 
+            // programBindingSource
+            // 
+            this.programBindingSource.DataSource = typeof(MinionMaster.Program);
             // 
             // MinionMasterForm
             // 

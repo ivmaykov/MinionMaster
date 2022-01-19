@@ -10,10 +10,12 @@ namespace MinionMaster
     {
         internal static Dictionary<string, Preset> Values = populatePresets();
 
-        private static string kParalyzingPoisonNote = "paralyzing poison, see stat block for effect details";
-
         private static Dictionary<string, Preset> populatePresets()
         {
+            string kParalyzingPoisonNote = "paralyzing poison, see stat block for effect details"; ;
+            string kKnockedProneOnFailedSave = "target knocked prone on save failure";
+            string k20FootChargeAndKnockedProneOnFailedSave = "requires 20 ft charge, " + kKnockedProneOnFailedSave;
+
             Dictionary<string, Preset> result = new Dictionary<string, Preset>();
             addPreset(result, new Preset(
                 presetName: "Animate Objects: Tiny",
@@ -117,7 +119,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 1));
@@ -155,7 +157,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 16,
                         DamageOnSaveFailure.Full,
-                        note: "grappled on save failure, DC 16 to escape"
+                        note: "target grappled on hit, DC 16 to escape"
                         )
                     ),
                 allowMultiAttack: false,
@@ -182,7 +184,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 14,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 attack2: new AttackSpecification(
@@ -282,7 +284,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 15,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 1));
@@ -320,7 +322,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 14,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 allowMultiAttack: false,
@@ -376,7 +378,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "target knocked prone on save failure"
+                        note: kKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 2));
@@ -499,7 +501,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Half,
-                        note: "target grappled on hit, allows Swallow attack, see stat block"
+                        note: "target grappled on hit (DC 13 to escape), allows Swallow attack, see stat block"
                         )
                     ),
                 minionCount: 2));
@@ -566,7 +568,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 allowMultiAttack: false,
@@ -605,7 +607,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 allowMultiAttack: false,
@@ -716,7 +718,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 4));
@@ -742,7 +744,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 11,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 4));
@@ -810,7 +812,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 14,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 4));
@@ -852,7 +854,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 11,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 8));
@@ -890,7 +892,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 14,
                         DamageOnSaveFailure.Full,
-                        note: "target grappled on save failure"
+                        note: "target grappled on hit, DC 14 to escape"
                         )
                     ),
                 allowMultiAttack: false,
@@ -933,7 +935,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 13,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 attack2: new AttackSpecification(
@@ -1043,7 +1045,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 11,
                         DamageOnSaveFailure.Half,
-                        note: "target grappled on hit, allows Swallow attack, see stat block"
+                        note: "target grappled on hit (DC 11 to escape), allows Swallow attack, see stat block"
                         )
                     ),
                 minionCount: 8));
@@ -1165,7 +1167,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 12,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 allowMultiAttack: false,
@@ -1208,7 +1210,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 11,
                         DamageOnSaveFailure.Full,
-                        note: "target knocked prone on save failure"
+                        note: kKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 8));
@@ -1266,7 +1268,8 @@ namespace MinionMaster
                         saveAbility: Ability.CON, // Doesn't matter
                         saveDC: 13, // Doesn't matter
                         damageOnSaveFailure: DamageOnSaveFailure.None /* doesn't matter */,
-                        note: "no save poison bite")
+                        note: "no save poison bite"
+                        )
                     ),
                 minionCount: 8));
             addPreset(result, new Preset(
@@ -1349,7 +1352,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 11,
                         DamageOnSaveFailure.Full,
-                        note: "target knocked prone on save failure"
+                        note: kKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 8));
@@ -1578,7 +1581,7 @@ namespace MinionMaster
                         saveAbility: Ability.STR,
                         saveDC: 10,
                         DamageOnSaveFailure.Full,
-                        note: "requires 20 ft charge, target knocked prone on save failure"
+                        note: k20FootChargeAndKnockedProneOnFailedSave
                         )
                     ),
                 minionCount: 8));
