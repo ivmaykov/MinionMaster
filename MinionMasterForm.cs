@@ -98,8 +98,16 @@ namespace MinionMaster
 
         private void roll_button_Click(object sender, EventArgs e)
         {
-            rollTheDice();
-            renderRollResults();
+            try
+            {
+                rollTheDice();
+                renderRollResults();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                rolls.Clear();
+            }
         }
 
         private void rollTheDiceForAttack(AttackUiComponents attackUi)
