@@ -101,7 +101,8 @@ namespace MinionMaster
             else if (Resistance.Vulnerable == resistance)
             {
                 desc = $"{totalDamage} ({diceDetails}*2) {damageTypeString} damage";
-            } else
+            }
+            else
             {
                 desc = $"{totalDamage} {diceDetails} {damageTypeString} damage";
             }
@@ -132,7 +133,8 @@ namespace MinionMaster
                 if (DamageOnSaveFailure.Half == spec.DamageOnSaveFailure)
                 {
                     totalDamageOnSave = totalDamage / 2;
-                } else if (DamageOnSaveFailure.Full == spec.DamageOnSaveFailure)
+                }
+                else if (DamageOnSaveFailure.Full == spec.DamageOnSaveFailure)
                 {
                     totalDamageOnSave = totalDamage;
                 }
@@ -161,7 +163,10 @@ namespace MinionMaster
             }
             if (spec.RequiresSave)
             {
-                desc += $" on {spec.SaveAbility} save failure (DC {spec.SaveDC}), or {totalDamageOnSave} damage on save success";
+                desc += $" on {spec.SaveAbility} save failure (DC {spec.SaveDC})";
+                if (totalDamage > 0 || totalDamageOnSave > 0) {
+                    desc += $", or {totalDamageOnSave} damage on save success";
+                }
             }
             return desc;
         }

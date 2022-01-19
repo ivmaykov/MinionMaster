@@ -18,7 +18,6 @@ namespace MinionMaster
 
     internal enum DieType
     {
-        [DieSizeAttr(1)] d1, // Used to implement flat damage rolls with no randomness
         [DieSizeAttr(2)] d2,
         [DieSizeAttr(3)] d3,
         [DieSizeAttr(4)] d4,

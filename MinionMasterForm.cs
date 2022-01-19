@@ -170,25 +170,25 @@ namespace MinionMaster
             return outputText;
         }
 
-        private string capitalize(string str)
-        {
-            if (String.IsNullOrEmpty(str))
-            {
-                return str;
-            }
-            return str[0].ToString().ToUpper() + str.Substring(1);
-        }
-
         private string pluralize(string str)
         {
             if (String.IsNullOrEmpty(str))
             {
                 return str;
             }
-            if (str[str.Length - 1] == 's')
+            else if (str.EndsWith("Wolf"))
+            {
+                return str.Substring(0, str.Length - 1) + "ves";
+            }
+            else if (str.EndsWith("y") && str.Length >= 1)
+            {
+                return str.Substring(0, str.Length - 1) + "ies";
+            }
+            else if (str.EndsWith("s"))
             {
                 return str + "es";
-            } else
+            }
+            else
             {
                 return str + "s";
             }
@@ -232,7 +232,7 @@ namespace MinionMaster
                     continue;
                 }
                 AttackSpecification spec = attackUi.GetAttackSpecification();
-                outputText += $"{capitalize(minionName)} {r.MinionIndex} {spec.Name} #{r.AttackCountIndex}: ";
+                outputText += $"{minionName} {r.MinionIndex} {spec.Name} #{r.AttackCountIndex}: ";
                 outputText += r.AttackRoll.describe(spec.Advantage, spec.HitModifier, targetAC);
                 AttackResult attackResult = r.AttackRoll.getAttackResult(spec.Advantage, spec.HitModifier, targetAC);
                 if (AttackResult.Miss == attackResult)
