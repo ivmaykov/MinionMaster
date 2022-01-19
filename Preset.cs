@@ -9,46 +9,59 @@ namespace MinionMaster
     internal readonly struct Preset
     {
         internal Preset(
-            string name,
-            AttackSpecification attack,
+            string presetName,
+            string minionName,
+            AttackSpecification attack1,
             int minionCount)
         {
-            this.Name = name;
+            this.PresetName = presetName;
+            this.MinionName = minionName;
             this.Attacks = new List<AttackSpecification>(1);
-            this.Attacks.Add(attack);
+            this.Attacks.Add(attack1);
+            this.AllowMultiAttack = false;
             this.MinionCount = minionCount;
         }
 
         internal Preset(
-            string name,
+            string presetName,
+            string minionName,
             AttackSpecification attack1,
             AttackSpecification attack2,
+            bool allowMultiAttack,
             int minionCount)
         {
-            this.Name = name;
+            this.PresetName = presetName;
+            this.MinionName = minionName;
             this.Attacks = new List<AttackSpecification>(2);
             this.Attacks.Add(attack1);
             this.Attacks.Add(attack2);
+            this.AllowMultiAttack = allowMultiAttack;
             this.MinionCount = minionCount;
         }
 
         internal Preset(
-            string name,
+            string presetName,
+            string minionName,
             AttackSpecification attack1,
             AttackSpecification attack2,
             AttackSpecification attack3,
+            bool allowMultiAttack,
             int minionCount)
         {
-            this.Name = name;
-            this.Attacks = new List<AttackSpecification>(1);
+            this.PresetName = presetName;
+            this.MinionName = minionName;
+            this.Attacks = new List<AttackSpecification>(3);
             this.Attacks.Add(attack1);
             this.Attacks.Add(attack2);
             this.Attacks.Add(attack3);
+            this.AllowMultiAttack = allowMultiAttack;
             this.MinionCount = minionCount;
         }
 
-        internal string Name { get; }
+        internal string PresetName { get; }
+        internal string MinionName { get; }
         internal List<AttackSpecification> Attacks { get; }
+        internal bool AllowMultiAttack { get; }
         internal int MinionCount { get; }
     }
 }

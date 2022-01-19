@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    public readonly struct AttackRoll
+    internal readonly struct AttackRoll
     {
-        public AttackRoll(int firstRoll, int secondRoll)
+        internal AttackRoll(int firstRoll, int secondRoll)
         {
             this.FirstRoll = firstRoll;
             this.SecondRoll = secondRoll;
         }
 
-        public int FirstRoll { get; }
-        public int SecondRoll { get; }
+        internal int FirstRoll { get; }
+        internal int SecondRoll { get; }
 
         private int getEffectiveBaseRoll(Advantage advantage)
         {
@@ -32,12 +32,12 @@ namespace MinionMaster
             }
         }
 
-        public AttackResult getAttackResult(Advantage advantage, int attackModifier, int targetAC)
+        internal AttackResult getAttackResult(Advantage advantage, int attackModifier, int targetAC)
         {
             return getAttackResult(getEffectiveBaseRoll(advantage), attackModifier, targetAC);
         }
 
-        public AttackResult getAttackResult(int attackRoll, int attackModifier, int targetAC)
+        internal AttackResult getAttackResult(int attackRoll, int attackModifier, int targetAC)
         {
             if (attackRoll == 20)
             {
@@ -57,7 +57,7 @@ namespace MinionMaster
             }
         }
 
-        public String describe(Advantage advantage, int attackModifier, int targetAC)
+        internal String describe(Advantage advantage, int attackModifier, int targetAC)
         {
             AttackResult attackResult = getAttackResult(advantage, attackModifier, targetAC);
             int baseRoll = getEffectiveBaseRoll(advantage);

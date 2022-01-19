@@ -17,7 +17,8 @@ namespace MinionMaster
             int hitModifier,
             DamageFormula damageFormula,
             Resistance targetResistance,
-            DamageType damageType)
+            DamageType damageType,
+            ExtraDamageSpecification? extraDamageSpecification)
         {
             this.Name = name;
             this.IsEnabled = isEnabled;
@@ -28,6 +29,7 @@ namespace MinionMaster
             this.DamageFormula = damageFormula;
             this.TargetResistance = targetResistance;
             this.DamageType = damageType;
+            this.ExtraDamageSpec = extraDamageSpecification;
         }
 
         internal string Name { get; }
@@ -40,6 +42,6 @@ namespace MinionMaster
         internal DamageFormula DamageFormula { get; }
         internal Resistance TargetResistance { get; }
         internal DamageType DamageType { get; }
-
+        internal ExtraDamageSpecification? ExtraDamageSpec { get; }
     }
 }

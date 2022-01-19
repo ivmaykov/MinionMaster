@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    internal enum Advantage
+    internal enum Ability
     {
-        None,
-        Advantage,
-        Disadvantage
+        STR,
+        DEX,
+        CON,
+        INT,
+        WIS,
+        CHA
     }
 }

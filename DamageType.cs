@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    public enum DamageType
+    internal enum DamageType
     {
         Acid,
         Bludgeoning,

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    public enum Resistance
+    internal enum Resistance
     {
         None,
+        Vulnerable,
         Resistant,
-        Vulnerable
+        Immune
     }
 }

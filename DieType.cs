@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    class DieSizeAttr : Attribute
+    internal class DieSizeAttr : Attribute
     {
         internal DieSizeAttr(int size)
         {
             this.Size = size;
         }
-        public int Size { get; private set; }
+        internal int Size { get; private set; }
     }
 
-    public enum DieType
+    internal enum DieType
     {
         [DieSizeAttr(1)] d1, // Used to implement flat damage rolls with no randomness
         [DieSizeAttr(2)] d2,
@@ -30,11 +30,11 @@ namespace MinionMaster
         [DieSizeAttr(100)] d100
     }
 
-    public static class DieTypes
+    internal static class DieTypes
     {
         private static Random random = new Random();
 
-        public static int roll(this DieType dieType)
+        internal static int roll(this DieType dieType)
         {
             DieSizeAttr attr = GetAttr(dieType);
             return random.Next(1, attr.Size + 1);

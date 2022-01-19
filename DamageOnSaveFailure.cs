@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    internal enum Advantage
+    internal enum DamageOnSaveFailure
     {
         None,
-        Advantage,
-        Disadvantage
+        Half,
+        Full
     }
 }

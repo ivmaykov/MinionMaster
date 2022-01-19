@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ability.cs" />
     <Compile Include="Advantage.cs" />
     <Compile Include="AttackAndDamageRoll.cs" />
     <Compile Include="AttackResult.cs" />
@@ -53,9 +54,11 @@
     <Compile Include="AttackSpecification.cs" />
     <Compile Include="AttackUiComponents.cs" />
     <Compile Include="DamageFormula.cs" />
+    <Compile Include="DamageOnSaveFailure.cs" />
     <Compile Include="DamageRoll.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="DieType.cs" />
+    <Compile Include="ExtraDamageSpecification.cs" />
     <Compile Include="MinionMasterForm.cs">
       <SubType>Form</SubType>
     </Compile>

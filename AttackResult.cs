@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MinionMaster
 {
-    public enum AttackResult
+    internal enum AttackResult
     {
         Miss,
         Hit,

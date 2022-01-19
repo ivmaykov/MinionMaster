@@ -29,7 +29,17 @@ namespace MinionMaster
                 this.hit_modifier1_numericUpDown,
                 this.attack1_damage_formula_textBox,
                 this.target_resistance1_comboBox,
-                this.damage_type1_comboBox));
+                this.damage_type1_comboBox,
+                this.extra_damage1_checkBox,
+                this.extra_damage_magical1_checkBox,
+                this.attack1_extra_damage_formula_textBox,
+                this.extra_damage_type1_comboBox,
+                this.extra_target_resistance1_comboBox,
+                this.extra_damage_save1_checkBox,
+                this.extra_damage_save_ability1_comboBox,
+                this.extra_damage_save_dc1_numericUpDown,
+                this.extra_damage_save_on_failure1_comboBox,
+                this.extra_damage_note1_textBox));
             attacks.Add(new AttackUiComponents(
                 2,
                 this.attack2_enabled_checkBox,
@@ -40,7 +50,17 @@ namespace MinionMaster
                 this.hit_modifier2_numericUpDown,
                 this.attack2_damage_formula_textBox,
                 this.target_resistance2_comboBox,
-                this.damage_type2_comboBox));
+                this.damage_type2_comboBox,
+                this.extra_damage2_checkBox,
+                this.extra_damage_magical2_checkBox,
+                this.attack2_extra_damage_formula_textBox,
+                this.extra_damage_type2_comboBox,
+                this.extra_target_resistance2_comboBox,
+                this.extra_damage_save2_checkBox,
+                this.extra_damage_save_ability2_comboBox,
+                this.extra_damage_save_dc2_numericUpDown,
+                this.extra_damage_save_on_failure2_comboBox,
+                this.extra_damage_note2_textBox));
             attacks.Add(new AttackUiComponents(
                 3,
                 this.attack3_enabled_checkBox,
@@ -51,7 +71,17 @@ namespace MinionMaster
                 this.hit_modifier3_numericUpDown,
                 this.attack3_damage_formula_textBox,
                 this.target_resistance3_comboBox,
-                this.damage_type3_comboBox));
+                this.damage_type3_comboBox,
+                this.extra_damage3_checkBox,
+                this.extra_damage_magical3_checkBox,
+                this.attack3_extra_damage_formula_textBox,
+                this.extra_damage_type3_comboBox,
+                this.extra_target_resistance3_comboBox,
+                this.extra_damage_save3_checkBox,
+                this.extra_damage_save_ability3_comboBox,
+                this.extra_damage_save_dc3_numericUpDown,
+                this.extra_damage_save_on_failure3_comboBox,
+                this.extra_damage_note3_textBox));
             this.preset_comboBox.DataSource = Presets.Values.Keys.ToList();
             this.output_textBox.Text = "Press the ROLL button!";
         }
@@ -81,16 +111,20 @@ namespace MinionMaster
             int numMinions = (int) this.num_minions_numericUpDown.Value;
             int numDamageDice = (int) attackUi.ParseDamageFormula().DamageDieCount;
             DieType damageDieType = attackUi.ParseDamageFormula().DamageDieType;
-            DamageType damageType = (DamageType) Enum.Parse(typeof(DamageType), attackUi.DamageType.Text);
-            if (!Enum.IsDefined(typeof(DamageType), damageType))
-            {
-                throw new Exception("Invalid DamageType enum: " + attackUi.DamageType.Text);
-            }
 
             for (int m = 1; m <= numMinions; m++)
             {
                 for (int a = 1; a <= attackUi.AttackCount.Value; a++)
                 {
+                    DamageRoll? extraDamageRoll = null;
+                    if (attackUi.HasExtraDamage.Checked)
+                    {
+                        int numExtraDamageDice = (int) attackUi.ParseExtraDamageFormula().DamageDieCount;
+                        DieType extraDamageDieType = attackUi.ParseExtraDamageFormula().DamageDieType;
+                        extraDamageRoll = new DamageRoll(
+                            multiRollDamageDice(numExtraDamageDice, extraDamageDieType),
+                            multiRollDamageDice(numExtraDamageDice, extraDamageDieType));
+                    }
                     rolls.Add(new AttackAndDamageRoll(
                         m,
                         attackUi.AttackTypeIndex,
@@ -98,7 +132,8 @@ namespace MinionMaster
                         new AttackRoll(DieType.d20.roll(), DieType.d20.roll()),
                         new DamageRoll(
                             multiRollDamageDice(numDamageDice, damageDieType),
-                            multiRollDamageDice(numDamageDice, damageDieType))));
+                            multiRollDamageDice(numDamageDice, damageDieType)),
+                        extraDamageRoll));
                 }
             }
         }
@@ -135,6 +170,30 @@ namespace MinionMaster
             return outputText;
         }
 
+        private string capitalize(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+            return str[0].ToString().ToUpper() + str.Substring(1);
+        }
+
+        private string pluralize(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+            {
+                return str;
+            }
+            if (str[str.Length - 1] == 's')
+            {
+                return str + "es";
+            } else
+            {
+                return str + "s";
+            }
+        }
+
         private void renderRollResults()
         {
             if (rolls.Count == 0)
@@ -144,7 +203,12 @@ namespace MinionMaster
             }
             int numMinions = (int) this.num_minions_numericUpDown.Value;
             int targetAC = (int) this.target_ac_numericUpDown.Value;
-            String outputText = $"Rolling attacks for {numMinions} minions vs AC {targetAC}{Environment.NewLine}";
+            String minionName = this.minion_name_textBox.Text;
+            if (minionName.Length == 0)
+            {
+                minionName = "minion";
+            }
+            String outputText = $"Rolling attacks for {numMinions} {pluralize(minionName)} vs AC {targetAC}{Environment.NewLine}";
             foreach (AttackUiComponents attack in attacks)
             {
                 if (attack.IsEnabled.Checked)
@@ -154,6 +218,7 @@ namespace MinionMaster
             }
 
             Dictionary<string, int> damageTotalsByType = new Dictionary<string, int>();
+            Dictionary<string, int> extraDamageTotalsByType = new Dictionary<string, int>();
             int totalHits = 0;
             int totalCrits = 0;
             int totalMisses = 0;
@@ -166,9 +231,10 @@ namespace MinionMaster
                 {
                     continue;
                 }
-                outputText += $"Minion {r.MinionIndex} {attackUi.GetDisplayName()}, attack #{r.AttackCountIndex}: ";
-                outputText += r.AttackRoll.describe(attackUi.getAdvantageEnum(), (int) attackUi.HitModifier.Value, targetAC);
-                AttackResult attackResult = r.AttackRoll.getAttackResult(attackUi.getAdvantageEnum(), (int) attackUi.HitModifier.Value, targetAC);
+                AttackSpecification spec = attackUi.GetAttackSpecification();
+                outputText += $"{capitalize(minionName)} {r.MinionIndex} {spec.Name} #{r.AttackCountIndex}: ";
+                outputText += r.AttackRoll.describe(spec.Advantage, spec.HitModifier, targetAC);
+                AttackResult attackResult = r.AttackRoll.getAttackResult(spec.Advantage, spec.HitModifier, targetAC);
                 if (AttackResult.Miss == attackResult)
                 {
                     totalMisses++;
@@ -190,24 +256,15 @@ namespace MinionMaster
                 {
                     totalCrits++;
                 }
-                int damageDone = r.DamageRoll.getDamageResult(attackResult, attackUi.getTargetResistanceEnum(), (int) attackUi.ParseDamageFormula().AdditionalDamage);
-                DamageType damageType = attackUi.getDamageTypeEnum();
-                bool isMagical = attackUi.IsMagical.Checked;
-                outputText += ", doing " + r.DamageRoll.describe(
-                    attackResult,
-                    attackUi.getTargetResistanceEnum(),
-                    (int) attackUi.ParseDamageFormula().AdditionalDamage,
-                    isMagical,
-                    damageType);
-                outputText += Environment.NewLine;
+                int damageDone = r.DamageRoll.getDamageResult(attackResult, spec.TargetResistance, spec.DamageFormula.AdditionalDamage);
                 string damageTypeDesc = "";
-                if (isMagical)
+                if (spec.IsMagical)
                 {
-                    damageTypeDesc = $"Magical {damageType}";
+                    damageTypeDesc = $"Magical {spec.DamageType}";
                 }
                 else
                 {
-                    damageTypeDesc = damageType.ToString();
+                    damageTypeDesc = spec.DamageType.ToString("G");
                 }
                 if (damageTotalsByType.ContainsKey(damageTypeDesc))
                 {
@@ -217,6 +274,42 @@ namespace MinionMaster
                 {
                     damageTotalsByType[damageTypeDesc] = damageDone;
                 }
+                outputText += $",{Environment.NewLine}\t doing " + r.DamageRoll.describe(
+                    attackResult,
+                    spec.TargetResistance,
+                    spec.DamageFormula.AdditionalDamage,
+                    spec.IsMagical,
+                    spec.DamageType);
+                if (spec.ExtraDamageSpec is ExtraDamageSpecification extraDamageSpec)
+                {
+                    if (r.ExtraDamageRoll is DamageRoll extraDamageRoll)
+                    {
+                        outputText += $",{Environment.NewLine}\t and {extraDamageRoll.describeExtraDamage(attackResult, extraDamageSpec)}!";
+                        if (extraDamageSpec.Note.Length > 0)
+                        {
+                            outputText += $" (Note: {extraDamageSpec.Note})";
+                        }
+                        int extraDamageDone = extraDamageRoll.getExtraDamageResult(attackResult, extraDamageSpec);
+                        string extraDamageTypeDesc = "";
+                        if (extraDamageSpec.IsMagical)
+                        {
+                            extraDamageTypeDesc = $"Magical {extraDamageSpec.DamageType}";
+                        }
+                        else
+                        {
+                            extraDamageTypeDesc = extraDamageSpec.DamageType.ToString("G");
+                        }
+                        if (extraDamageTotalsByType.ContainsKey(extraDamageTypeDesc))
+                        {
+                            extraDamageTotalsByType[extraDamageTypeDesc] += extraDamageDone;
+                        }
+                        else
+                        {
+                            extraDamageTotalsByType[extraDamageTypeDesc] = extraDamageDone;
+                        }
+                    }
+                }
+                outputText += Environment.NewLine;
             }
             outputText += "Crits: " + totalCrits + ", hits: " + totalHits + ", misses: " + totalMisses;
             outputText += ", crit fails: " + totalCritFails;
@@ -230,6 +323,13 @@ namespace MinionMaster
             {
                 outputText += "Total damage done: 0" + Environment.NewLine;
             }
+            outputText += Environment.NewLine;
+            if (extraDamageTotalsByType.Count > 0)
+            {
+                outputText += "Max extra damage done by type (might depend on saves): " + Environment.NewLine;
+                outputText += extraDamageTotalsByType.Select((entry) => $"{entry.Key}: {entry.Value}").Aggregate((x, y) => $"{x}{Environment.NewLine}{y}");
+            }
+            outputText += Environment.NewLine;
             this.output_textBox.Text = outputText;
         }
 
@@ -266,6 +366,9 @@ namespace MinionMaster
         private void applyPreset(Preset preset)
         {
             int i = 0;
+            this.allow_multi_attack_checkBox.Checked = preset.AllowMultiAttack;
+            this.num_minions_numericUpDown.Value = preset.MinionCount;
+            this.minion_name_textBox.Text = preset.MinionName;
             foreach (AttackSpecification attackSpec in preset.Attacks)
             {
                 this.attacks.ElementAt(i).populateFromSpecification(attackSpec);
@@ -276,7 +379,6 @@ namespace MinionMaster
                 this.attacks.ElementAt(i).IsEnabled.Checked = false;
                 this.attacks.ElementAt(i).onIsEnabledToggle();
             }
-            this.num_minions_numericUpDown.Value = preset.MinionCount;
         }
 
         private void preset_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -289,14 +391,31 @@ namespace MinionMaster
 
         private void attack1_enabled_checkBox_CheckedChanged(object sender, EventArgs e)
         {
+            this.attacks.ElementAt(0).onIsEnabledToggle();
+            if (!this.allow_multi_attack_checkBox.Checked && this.attacks.ElementAt(0).IsEnabled.Checked)
+            {
+                // If multi-attack is not allowed, and we just enabled attack 1, disable all other attacks
+                this.attacks.ElementAt(1).IsEnabled.Checked = false;
+                this.attacks.ElementAt(1).onIsEnabledToggle();
+                this.attacks.ElementAt(2).IsEnabled.Checked = false;
+                this.attacks.ElementAt(2).onIsEnabledToggle();
+            }
             rolls.Clear();
             renderRollResults();
         }
 
         private void attack2_enabled_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            attacks.ElementAt(1).onIsEnabledToggle();
-            rolls.Clear();
+            this.attacks.ElementAt(1).onIsEnabledToggle();
+            if (!this.allow_multi_attack_checkBox.Checked && this.attacks.ElementAt(1).IsEnabled.Checked)
+            {
+                // If multi-attack is not allowed, and we just enabled attack 2, disable all other attacks
+                this.attacks.ElementAt(0).IsEnabled.Checked = false;
+                this.attacks.ElementAt(0).onIsEnabledToggle();
+                this.attacks.ElementAt(2).IsEnabled.Checked = false;
+                this.attacks.ElementAt(2).onIsEnabledToggle();
+            }
+            this.rolls.Clear();
             renderRollResults();
         }
 
@@ -317,8 +436,16 @@ namespace MinionMaster
 
         private void attack3_enabled_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            attacks.ElementAt(2).onIsEnabledToggle();
-            rolls.Clear();
+            this.attacks.ElementAt(2).onIsEnabledToggle();
+            if (!this.allow_multi_attack_checkBox.Checked && this.attacks.ElementAt(2).IsEnabled.Checked)
+            {
+                // If multi-attack is not allowed, and we just enabled attack 3, disable all other attacks
+                this.attacks.ElementAt(0).IsEnabled.Checked = false;
+                this.attacks.ElementAt(0).onIsEnabledToggle();
+                this.attacks.ElementAt(1).IsEnabled.Checked = false;
+                this.attacks.ElementAt(1).onIsEnabledToggle();
+            }
+            this.rolls.Clear();
             renderRollResults();
         }
 
@@ -415,6 +542,179 @@ namespace MinionMaster
         private void attack3_damage_formula_textBox_TextChanged(object sender, EventArgs e)
         {
             rolls.Clear();
+            renderRollResults();
+        }
+
+        private void attack1_extra_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_damage_type1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_magical1_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage1_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(0).onIsEnabledToggle();
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_target_resistance1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save1_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(0).onIsEnabledToggle();
+            renderRollResults();
+        }
+
+        private void extra_damage_save_ability1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save_on_failure1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage2_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(1).onIsEnabledToggle();
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_damage_magical2_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void attack2_extra_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_damage_type2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_target_resistance2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save2_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(1).onIsEnabledToggle();
+            renderRollResults();
+        }
+
+        private void extra_damage_save_ability2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save_dc2_numericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save_on_failure2_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage3_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(2).onIsEnabledToggle();
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_damage_magical3_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void attack3_extra_damage_formula_textBox_TextChanged(object sender, EventArgs e)
+        {
+            this.rolls.Clear();
+            renderRollResults();
+        }
+
+        private void extra_damage_type3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_target_resistance3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save3_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.attacks.ElementAt(0).onIsEnabledToggle();
+            renderRollResults();
+        }
+
+        private void extra_damage_save_ability3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save_dc3_numericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_save_on_failure3_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void allow_multi_attack_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            rolls.Clear();
+            renderRollResults();
+        }
+
+        private void minion_name_textBox_TextChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_note1_textBox_TextChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_note2_textBox_TextChanged(object sender, EventArgs e)
+        {
+            renderRollResults();
+        }
+
+        private void extra_damage_note3_textBox_TextChanged(object sender, EventArgs e)
+        {
             renderRollResults();
         }
     }
